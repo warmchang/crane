@@ -1,32 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Crane – 教程</title><link>/zh-cn/docs/tutorials/</link><description>Recent content in 教程 on Crane</description><generator>Hugo -- gohugo.io</generator><atom:link href="/zh-cn/docs/tutorials/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: 智能推荐</title><link>/zh-cn/docs/tutorials/analytics-and-recommendation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/analytics-and-recommendation/</guid><description>
-&lt;p>智能推荐能够帮助用户自动分析集群并给出优化建议。就像手机助手一样，智能推荐会定期的扫描、分析你的集群并给出推荐建议。目前，我们提供了两种优化能力：&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="/zh-cn/docs/tutorials/resource-recommendation">&lt;strong>资源推荐&lt;/strong>&lt;/a>: 通过资源推荐的算法分析应用的真实用量推荐更合适的资源配置，您可以参考并采纳它提升集群的资源利用率。&lt;/li>
-&lt;li>&lt;a href="/zh-cn/docs/tutorials/replicas-recommendation">&lt;strong>副本数推荐&lt;/strong>&lt;/a>: 通过副本数推荐的算法分析应用的真实用量推荐更合适的副本和 EHPA 配置，您可以参考并采纳它提升集群的资源利用率。&lt;/li>
-&lt;/ul>
-&lt;p>应用可以根据资源推荐调整 request 也可以根据副本数推荐调整副本数，这两种优化都能帮助您降低成本，您可以根据您的需求选择采用相应的优化建议。&lt;/p>
-&lt;h2 id="架构">架构&lt;/h2>
-&lt;p>&lt;img src="/images/analytics-arch.png" alt="analytics-arch">&lt;/p>
-&lt;h2 id="一次分析的过程">一次分析的过程&lt;/h2>
-&lt;ol>
-&lt;li>用户创建 Analytics 对象，通过 ResourceSelector 选择需要分析的资源，支持选择多类型（基于Group,Kind,Version）的批量选择&lt;/li>
-&lt;li>并行分析每个选择的资源，尝试进行分析推荐，每次分析过程分成筛选和推荐两个阶段：
-&lt;ol>
-&lt;li>筛选：排除不满足推荐条件的资源。比如对于弹性推荐，排除没有 running pod 的 workload&lt;/li>
-&lt;li>推荐：通过算法计算分析，给出推荐结果&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;li>如果通过筛选，创建 Recommendation 对象，将推荐结果展示在 Recommendation.Status&lt;/li>
-&lt;li>未通过筛选的原因和状态展示在 Analytics.Status&lt;/li>
-&lt;li>根据运行间隔等待下次分析&lt;/li>
-&lt;/ol>
-&lt;h2 id="名词解释">名词解释&lt;/h2>
-&lt;h3 id="分析">分析&lt;/h3>
-&lt;p>分析定义了一个扫描分析任务。支持两种任务类型：资源推荐和弹性推荐。Crane 定期运行分析任务，并产生推荐结果。&lt;/p>
-&lt;h3 id="推荐">推荐&lt;/h3>
-&lt;p>推荐展示了一个优化推荐的结果。推荐的结果是一段 YAML 配置，根据结果用户可以进行相应的优化动作，比如调整应用的资源配置。&lt;/p>
-&lt;h3 id="参数配置">参数配置&lt;/h3>
-&lt;p>不同的分析采用不同的计算模型，Crane 提供了一套默认的计算模型以及一套配套的配置，用户可以通过修改配置来定制推荐的效果。支持修改全局的默认配置和修改单个分析任务的配置。&lt;/p></description></item><item><title>Docs: 动态调度器：一个基于负载感知的调度插件</title><link>/zh-cn/docs/tutorials/dynamic-scheduler-plugin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/dynamic-scheduler-plugin/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Crane – 教程</title><link>/zh-cn/docs/tutorials/</link><description>Recent content in 教程 on Crane</description><generator>Hugo -- gohugo.io</generator><atom:link href="/zh-cn/docs/tutorials/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: QOS增强与混布</title><link>/zh-cn/docs/tutorials/colocation-with-enhanced-qos/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/colocation-with-enhanced-qos/</guid><description/></item><item><title>Docs: 智能推荐</title><link>/zh-cn/docs/tutorials/recommendation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/recommendation/</guid><description/></item><item><title>Docs: 动态调度器：一个基于负载感知的调度插件</title><link>/zh-cn/docs/tutorials/dynamic-scheduler-plugin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/dynamic-scheduler-plugin/</guid><description>
 &lt;p>kubernetes 的原生调度器只能通过资源请求来调度 pod，这很容易造成一系列负载不均的问题：&lt;/p>
 &lt;ul>
 &lt;li>对于某些节点，实际负载与资源请求相差不大，这会导致很大概率出现稳定性问题。&lt;/li>
@@ -55,476 +27,187 @@
 &lt;/ul>
 &lt;p>在调度的&lt;code>Filter&lt;/code>阶段，如果该节点的实际使用率大于上述任一指标的阈值，则该节点将被过滤。而在&lt;code>Score&lt;/code>阶段，最终得分是这些指标值的加权和。&lt;/p>
 &lt;h3 id="hot-value">Hot Value&lt;/h3>
-&lt;p>在生产集群中，可能会频繁出现调度热点，因为创建 Pod 后节点的负载不能立即增加。因此，我们定义了一个额外的指标，名为&lt;code>Hot Value&lt;/code>，表示节点最近几次的调度频率。并且节点的最终优先级是最终得分减去&lt;code>Hot Value&lt;/code>。&lt;/p></description></item><item><title>Docs: 副本数推荐</title><link>/zh-cn/docs/tutorials/replicas-recommendation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/replicas-recommendation/</guid><description>
-&lt;p>Kubernetes 用户在创建应用资源时常常是基于经验值来设置副本数或者 EHPA 配置。通过副本数推荐的算法分析应用的真实用量推荐更合适的副本配置，您可以参考并采纳它提升集群的资源利用率。&lt;/p>
-&lt;h2 id="产品功能">产品功能&lt;/h2>
+&lt;p>在生产集群中，可能会频繁出现调度热点，因为创建 Pod 后节点的负载不能立即增加。因此，我们定义了一个额外的指标，名为&lt;code>Hot Value&lt;/code>，表示节点最近几次的调度频率。并且节点的最终优先级是最终得分减去&lt;code>Hot Value&lt;/code>。&lt;/p></description></item><item><title>Docs: 精细化调度器：一个感知节点资源拓扑的调度插件</title><link>/zh-cn/docs/tutorials/node-resource-tpolology-scheduler-plugins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/node-resource-tpolology-scheduler-plugins/</guid><description>
+&lt;h2 id="总览">总览&lt;/h2>
+&lt;p>现代多核服务器大多采用非统一内存访问架构（英语：Non-uniform memory access，简称NUMA）来提高硬件的可伸缩性。NUMA是一种为多处理器的电脑设计的内存架构，内存访问时间取决于内存相对于处理器的位置。在NUMA下，处理器访问它自己的本地内存的速度比非本地内存（内存位于另一个处理器，或者是处理器之间共享的内存）快一些。&lt;/p>
+&lt;p>在 Kubernetes 中，&lt;strong>调度&lt;/strong>是指将 &lt;a href="https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/">Pod&lt;/a> 放置到合适的&lt;a href="https://kubernetes.io/zh-cn/docs/concepts/architecture/nodes/">节点&lt;/a>上，一个节点会运行多个Pod。因此，调度器的调度粒度为节点级别，并不感知和考虑节点硬件拓扑的存在。在某些延迟敏感的场景下，可能希望Kubernetes为Pod分配拓扑最优的节点和硬件，以提升硬件利用率和程序性能。&lt;/p>
+&lt;p>同时，在某些复杂场景下，部分的Pod属于CPU密集型工作负载，Pod之间会争抢节点的CPU资源。当争抢剧烈的时候，Pod会在不同的CPU Core之间进行频繁的切换，更糟糕的是在NUMA Node之间的切换。这种大量的上下文切换，会影响程序运行的性能。&lt;/p>
+&lt;p>Kubernetes中虽然有Topology Manager来管理节点资源的拓扑对齐，但是没有与调度器联动，导致调度结果和设备资源分配结果可能不一致。&lt;/p>
+&lt;p>为了解决这一问题，资源拓扑感知调度给予了精细调度的能力，将调度的粒度扩展到设备级别。&lt;/p>
+&lt;h2 id="设计细节">设计细节&lt;/h2>
+&lt;h3 id="架构">架构&lt;/h3>
+&lt;p>&lt;img src="/images/topology-awareness-architecture.png" alt="topology-awareness-architecture">&lt;/p>
+&lt;p>Crane-Scheduler和Crane-Agent配合工作，完成拓扑感知调度与资源分配的工作。&lt;/p>
+&lt;p>Crane-Agent从节点采集资源拓扑，包括NUMA、Socket、设备等信息，汇总到NodeResourceTopology这个自定义资源对象中。&lt;/p>
+&lt;p>Crane-Scheduler在调度时会参考节点的NodeResourceTopology对象获取到节点详细的资源拓扑结构，在调度到节点的同时还会为Pod分配拓扑资源，并将结果写到Pod的annotations中。&lt;/p>
+&lt;p>Crane-Agent在节点上Watch到Pod被调度后，从Pod的annotations中获取到拓扑分配结果，并按照用户给定的CPU绑定策略进行CPUSet的细粒度分配。&lt;/p>
+&lt;p>&lt;img src="/images/topology-awareness-details.png" alt="topology-awareness-details">&lt;/p>
+&lt;h3 id="cpu分配策略">CPU分配策略&lt;/h3>
+&lt;p>Crane中提供了四种CPU分配策略，分别如下：&lt;/p>
 &lt;ol>
-&lt;li>算法：计算副本数的算法参考了 HPA 的计算公式，并且支持自定义算法的关键配置&lt;/li>
-&lt;li>HPA 推荐：副本数推荐会扫描出适合配置水平弹性（EHPA）的应用，并给出 EHPA 的配置, &lt;a href="/zh-cn/docs/tutorials/using-effective-hpa-to-scaling-with-effectiveness">EHPA&lt;/a> 是 Crane 提供了智能水平弹性产品&lt;/li>
-&lt;li>支持批量分析：通过 &lt;code>Analytics&lt;/code> 的 ResourceSelector，用户可以批量分析多个工作负载&lt;/li>
+&lt;li>none：该策略不进行特别的CPUSet分配，Pod会使用节点CPU共享池。&lt;/li>
+&lt;li>exclusive：该策略对应kubelet的static策略，Pod会独占CPU核心，其他任何Pod都无法使用。&lt;/li>
+&lt;li>numa：该策略会指定NUMA Node，Pod会使用该NUMA Node上的CPU共享池。&lt;/li>
+&lt;li>immovable：该策略会将Pod固定在某些CPU核心上，但这些核心属于共享池，其他Pod仍可使用。&lt;/li>
 &lt;/ol>
-&lt;h2 id="创建弹性分析">创建弹性分析&lt;/h2>
-&lt;p>创建一个&lt;strong>弹性分析&lt;/strong> &lt;code>Analytics&lt;/code>，这里我们通过实例 deployment: &lt;code>nginx&lt;/code> 作为一个例子&lt;/p>
-&lt;p>=== &amp;ldquo;Main&amp;rdquo;&lt;/p>
-&lt;pre>&lt;code> ```bash
-kubectl apply -f https://raw.githubusercontent.com/gocrane/crane/main/examples/analytics/nginx-deployment.yaml
-kubectl apply -f https://raw.githubusercontent.com/gocrane/crane/main/examples/analytics/analytics-replicas.yaml
-kubectl get analytics
-```
-&lt;/code>&lt;/pre>
-&lt;p>=== &amp;ldquo;Mirror&amp;rdquo;&lt;/p>
-&lt;pre>&lt;code> ```bash
-kubectl apply -f https://gitee.com/finops/crane/raw/main/examples/analytics/nginx-deployment.yaml
-kubectl apply -f https://gitee.com/finops/crane/raw/main/examples/analytics/analytics-replicas.yaml
-kubectl get analytics
-```
-&lt;/code>&lt;/pre>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
+&lt;h2 id="开始">开始&lt;/h2>
+&lt;h3 id="安装crane-agent">安装Crane-Agent&lt;/h3>
+&lt;ol>
+&lt;li>&lt;a href="/zh-cn/docs/getting-started/installation">参考这里&lt;/a>安装Crane-Agent&lt;/li>
+&lt;li>在Crane-Agent启动参数中添加 &lt;code>--feature-gates=NodeResourceTopology=true,CraneCPUManager=true&lt;/code>开启拓扑感知调度特性。&lt;/li>
+&lt;/ol>
+&lt;h3 id="安装crane-scheduler">安装Crane-Scheduler&lt;/h3>
+&lt;ol>
+&lt;li>备份 &lt;code>/etc/kubernetes/manifests/kube-scheduler.yaml&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>cp /etc/kubernetes/manifests/kube-scheduler.yaml /etc/kubernetes/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>通过修改 kube-scheduler 的配置文件（&lt;code>scheduler-config.yaml&lt;/code> ) 启用动态调度插件并配置插件参数：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">kubescheduler.config.k8s.io/v1beta2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">KubeSchedulerConfiguration&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">leaderElection&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">leaderElect&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">clientConnection&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kubeconfig&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;REPLACE_ME_WITH_KUBE_CONFIG_PATH&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">profiles&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">schedulerName&lt;/span>: &lt;span style="color:#ae81ff">default-scheduler&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">plugins&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">preFilter&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">NodeResourceTopologyMatch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">filter&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">NodeResourceTopologyMatch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">score&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">NodeResourceTopologyMatch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">weight&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">reserve&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">NodeResourceTopologyMatch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">preBind&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">NodeResourceTopologyMatch&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
+&lt;li>添加RBAC规则&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">rbac.authorization.k8s.io/v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">ClusterRole&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Replicas &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Resource&amp;#34; or &amp;#34;Replicas&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Periodical &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Once&amp;#34; or &amp;#34;Periodical&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">periodSeconds&lt;/span>: &lt;span style="color:#ae81ff">600&lt;/span> &lt;span style="color:#75715e"># analytics selected resources every 10 minutes&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceSelectors&lt;/span>: &lt;span style="color:#75715e"># defines all the resources to be select with&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">config&lt;/span>: &lt;span style="color:#75715e"># defines all the configuration for this analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas.workload-min-replicas&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas.fluctuation-threshold&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas.min-cpu-usage-threshold&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>结果如下:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>NAME AGE
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>nginx-replicas 16m
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>查看 Analytics 详情:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>kubectl get analytics nginx-replicas -o yaml
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>结果如下:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">system:kube-scheduler:plugins&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">rules&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiGroups&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">topology.crane.io&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resources&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">verbs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">get&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">list&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">watch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiGroups&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resources&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">pods&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">verbs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">patch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">ClusterRoleBinding&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">rbac.authorization.k8s.io/v1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Periodical&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">periodSeconds&lt;/span>: &lt;span style="color:#ae81ff">600&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">config&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas.fluctuation-threshold&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas.min-cpu-usage-threshold&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas.workload-min-replicas&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceSelectors&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labelSelector&lt;/span>: {}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">system:kube-scheduler:plugins&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">roleRef&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiGroup&lt;/span>: &lt;span style="color:#ae81ff">rbac.authorization.k8s.io&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">ClusterRole&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">system:kube-scheduler:plugins&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">subjects&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">User&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiGroup&lt;/span>: &lt;span style="color:#ae81ff">rbac.authorization.k8s.io&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">system:kube-scheduler&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="4">
+&lt;li>修改 &lt;code>kube-scheduler.yaml&lt;/code>并用 Crane-scheduler的镜像替换 kube-scheduler 镜像&lt;/li>
+&lt;/ol>
+&lt;h3 id="使用拓扑感知调度对pod进行精细化调度">使用拓扑感知调度对Pod进行精细化调度&lt;/h3>
+&lt;p>正确安装组件后，每个节点均会生成NodeResourceTopology对象。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ kubectl get nrt
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>NAME CRANE CPU MANAGER POLICY CRANE TOPOLOGY MANAGER POLICY AGE
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>9.134.230.65 Static SingleNUMANodePodLevel 35d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看出minikube集群中节点9.134.230.65已生成对应的NRT对象，此时Crane的CPU Manager Policy为 &lt;code>Static&lt;/code>，节点默认的Topology Manager Policy为 &lt;code>SingleNUMANodePodLevel&lt;/code>，代表节点不允许跨NUMA分配资源。&lt;/p>
+&lt;p>使用以下实例进行调度测试：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">status&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">conditions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">lastTransitionTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-17T06:56:07Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">message&lt;/span>: &lt;span style="color:#ae81ff">Analytics is ready&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">reason&lt;/span>: &lt;span style="color:#ae81ff">AnalyticsReady&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">status&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;True&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Ready&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">lastUpdateTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-17T06:56:06Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">recommendations&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">lastStartTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-17T06:56:06Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">message&lt;/span>: &lt;span style="color:#ae81ff">Success&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas-replicas-wq6wm&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">targetRef&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uid&lt;/span>: &lt;span style="color:#ae81ff">59f3eb3c-f786-4b15-b37e-774e5784c2db&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="查看分析结果">查看分析结果&lt;/h2>
-&lt;p>查看 &lt;strong>Recommendation&lt;/strong> 结果：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>kubectl get recommend -l analysis.crane.io/analytics-name&lt;span style="color:#f92672">=&lt;/span>nginx-replicas -o yaml
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>分析结果如下：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">items&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Recommendation&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">creationTimestamp&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-17T06:56:06Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">generateName&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas-replicas-&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">generation&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">analysis.crane.io/analytics-name&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">analysis.crane.io/analytics-type&lt;/span>: &lt;span style="color:#ae81ff">Replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">analysis.crane.io/analytics-uid&lt;/span>: &lt;span style="color:#ae81ff">795f245b-1e1f-4f7b-a02b-885d7a495e5b&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas-replicas-wq6wm&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ownerReferences&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">blockOwnerDeletion&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">controller&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uid&lt;/span>: &lt;span style="color:#ae81ff">795f245b-1e1f-4f7b-a02b-885d7a495e5b&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceVersion&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2182455668&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">selfLink&lt;/span>: &lt;span style="color:#ae81ff">/apis/analysis.crane.io/v1alpha1/namespaces/default/recommendations/nginx-replicas-replicas-wq6wm&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uid&lt;/span>: &lt;span style="color:#ae81ff">59f3eb3c-f786-4b15-b37e-774e5784c2db&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">adoptionType&lt;/span>: &lt;span style="color:#ae81ff">StatusAndAnnotation&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Once&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">targetRef&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">status&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">conditions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">lastTransitionTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-17T06:56:07Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">message&lt;/span>: &lt;span style="color:#ae81ff">Recommendation is ready&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">reason&lt;/span>: &lt;span style="color:#ae81ff">RecommendationReady&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">status&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;True&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Ready&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">lastUpdateTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-17T06:56:07Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">recommendedValue&lt;/span>: |&lt;span style="color:#e6db74">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> effectiveHPA:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> maxReplicas: 3
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> metrics:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> - resource:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> name: cpu
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> target:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> averageUtilization: 75
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> type: Utilization
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> type: Resource
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> minReplicas: 3
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> replicasRecommendation:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> replicas: 3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">List&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceVersion&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">selfLink&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="批量推荐">批量推荐&lt;/h2>
-&lt;p>我们通过一个例子来演示如何使用 &lt;code>Analytics&lt;/code> 推荐集群中所有的 Deployment 和 StatefulSet：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">workload-replicas&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">crane-system &lt;/span> &lt;span style="color:#75715e"># The Analytics in Crane-system will select all resource across all namespaces.&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Replicas &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Resource&amp;#34; or &amp;#34;Replicas&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Periodical &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Once&amp;#34; or &amp;#34;Periodical&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">periodSeconds&lt;/span>: &lt;span style="color:#ae81ff">86400&lt;/span> &lt;span style="color:#75715e"># analytics selected resources every 1 day&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceSelectors&lt;/span>: &lt;span style="color:#75715e"># defines all the resources to be select with&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">StatefulSet&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>当 namespace 等于 &lt;code>crane-system&lt;/code> 时，&lt;code>Analytics&lt;/code> 选择的资源是集群中所有的 namespace，当 namespace 不等于 &lt;code>crane-system&lt;/code> 时，&lt;code>Analytics&lt;/code> 选择 &lt;code>Analytics&lt;/code> namespace 下的资源&lt;/li>
-&lt;li>resourceSelectors 通过数组配置需要分析的资源，kind 和 apiVersion 是必填字段，name 选填&lt;/li>
-&lt;li>resourceSelectors 支持配置任意支持 &lt;a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#scale-subresource">Scale Subresource&lt;/a> 的资源&lt;/li>
-&lt;/ol>
-&lt;h2 id="弹性推荐计算模型">弹性推荐计算模型&lt;/h2>
-&lt;h3 id="筛选阶段">筛选阶段&lt;/h3>
-&lt;ol>
-&lt;li>低副本数的工作负载: 过低的副本数可能弹性需求不高，关联配置: &lt;code>ehpa.deployment-min-replicas&lt;/code> | &lt;code>ehpa.statefulset-min-replicas&lt;/code> | &lt;code>ehpa.workload-min-replicas&lt;/code>&lt;/li>
-&lt;li>存在一定比例非 Running Pod 的工作负载: 如果工作负载的 Pod 大多不能正常运行，可能不适合弹性，关联配置: &lt;code>ehpa.pod-min-ready-seconds&lt;/code> | &lt;code>ehpa.pod-available-ratio&lt;/code>&lt;/li>
-&lt;li>低 CPU 使用量的工作负载: 过低使用量的工作负载意味着没有业务压力，此时通过使用率推荐弹性不准，关联配置: &lt;code>ehpa.min-cpu-usage-threshold&lt;/code>&lt;/li>
-&lt;li>CPU 使用量的波动率过低: 使用量的最大值和最小值的倍数定义为波动率，波动率过低的工作负载通过弹性降本的收益不大，关联配置: &lt;code>ehpa.fluctuation-threshold&lt;/code>&lt;/li>
-&lt;/ol>
-&lt;h3 id="推荐">推荐&lt;/h3>
-&lt;p>推荐阶段通过以下模型推荐一个 EffectiveHPA 的 Spec。每个字段的推荐逻辑如下：&lt;/p>
-&lt;p>&lt;strong>推荐 TargetUtilization&lt;/strong>&lt;/p>
-&lt;p>原理: 使用 Pod P99 资源利用率推荐弹性的目标。因为如果应用可以在 P99 时间内接受这个利用率，可以推断出可作为弹性的目标。&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>通过 Percentile 算法得到 Pod 过去七天 的 P99 使用量: $pod_cpu_usage_p99$&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>对应的利用率:&lt;/p>
-&lt;p>$target_pod_CPU_utilization = \frac{pod_cpu_usage_p99}{pod_cpu_request}$&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>为了防止利用率过大或过小，target_pod_cpu_utilization 需要小于 ehpa.min-cpu-target-utilization 和大于 ehpa.max-cpu-target-utilization&lt;/p>
-&lt;p>$ehpa.max\mbox{-}cpu\mbox{-}target\mbox{-}utilization &amp;lt; target_pod_cpu_utilization &amp;lt; ehpa.min\mbox{-}cpu\mbox{-}target\mbox{-}utilization$&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;strong>推荐 minReplicas&lt;/strong>&lt;/p>
-&lt;p>原理: 使用 workload 过去七天内每小时负载最低的利用率推荐 minReplicas。&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>计算过去7天 workload 每小时使用量中位数的最低值: $workload_cpu_usage_medium_min$&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>对应的最低利用率对应的副本数:&lt;/p>
-&lt;p>$minReplicas = \frac{\mathrm{workload_cpu_usage_medium_min} }{pod_cpu_request \times ehpa.max-cpu-target-utilization}$&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>为了防止 minReplicas 过小，minReplicas 需要大于等于 ehpa.default-min-replicas&lt;/p>
-&lt;p>$minReplicas \geq ehpa.default\mbox{-}min\mbox{-}replicas$&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;strong>推荐 maxReplicas&lt;/strong>&lt;/p>
-&lt;p>原理: 使用 workload 过去和未来七天的负载推荐最大副本数。&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>计算过去七天和未来七天 workload cpu 使用量的 P95: $workload_cpu_usage_p95$&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>对应的副本数:&lt;/p>
-&lt;p>$max_replicas_origin = \frac{\mathrm{workload_cpu_usage_p95} }{pod_cpu_request \times target_cpu_utilization}$&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>为了应对流量洪峰，放大一定倍数:&lt;/p>
-&lt;p>$max_replicas = max_replicas_origin \times ehpa.max\mbox{-}replicas\mbox{-}factor$&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;strong>推荐CPU以外 MetricSpec&lt;/strong>&lt;/p>
-&lt;ol>
-&lt;li>如果 workload 配置了 HPA，继承相应除 CpuUtilization 以外的其他 MetricSpec&lt;/li>
-&lt;/ol>
-&lt;p>&lt;strong>推荐 Behavior&lt;/strong>&lt;/p>
-&lt;ol>
-&lt;li>如果 workload 配置了 HPA，继承相应的 Behavior 配置&lt;/li>
-&lt;/ol>
-&lt;p>&lt;strong>预测&lt;/strong>&lt;/p>
-&lt;ol>
-&lt;li>尝试预测工作负载未来七天的 CPU 使用量，算法是 DSP&lt;/li>
-&lt;li>如果预测成功则添加预测配置&lt;/li>
-&lt;li>如果不可预测则不添加预测配置，退化成不具有预测功能的 EffectiveHPA&lt;/li>
-&lt;/ol>
-&lt;h2 id="弹性分析计算配置">弹性分析计算配置&lt;/h2>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>配置项&lt;/th>
-&lt;th>默认值&lt;/th>
-&lt;th>描述&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>ehpa.deployment-min-replicas&lt;/td>
-&lt;td>1&lt;/td>
-&lt;td>小于该值的工作负载不做弹性推荐&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.statefulset-min-replicas&lt;/td>
-&lt;td>1&lt;/td>
-&lt;td>小于该值的工作负载不做弹性推荐&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.workload-min-replicas&lt;/td>
-&lt;td>1&lt;/td>
-&lt;td>小于该值的工作负载不做弹性推荐&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.pod-min-ready-seconds&lt;/td>
-&lt;td>30&lt;/td>
-&lt;td>定义了 Pod 是否 Ready 的秒数&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.pod-available-ratio&lt;/td>
-&lt;td>0.5&lt;/td>
-&lt;td>Ready Pod 比例小于该值的工作负载不做弹性推荐&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.default-min-replicas&lt;/td>
-&lt;td>2&lt;/td>
-&lt;td>最小 minReplicas&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.max-replicas-factor&lt;/td>
-&lt;td>3&lt;/td>
-&lt;td>计算 maxReplicas 的倍数&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.min-cpu-usage-threshold&lt;/td>
-&lt;td>10&lt;/td>
-&lt;td>小于该值的工作负载不做弹性推荐&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.fluctuation-threshold&lt;/td>
-&lt;td>1.5&lt;/td>
-&lt;td>小于该值的工作负载不做弹性推荐&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.min-cpu-target-utilization&lt;/td>
-&lt;td>30&lt;/td>
-&lt;td>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.max-cpu-target-utilization&lt;/td>
-&lt;td>75&lt;/td>
-&lt;td>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>ehpa.reference-hpa&lt;/td>
-&lt;td>true&lt;/td>
-&lt;td>继承现有的 HPA 配置&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table></description></item><item><title>Docs: 资源推荐</title><link>/zh-cn/docs/tutorials/resource-recommendation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/resource-recommendation/</guid><description>
-&lt;p>Kubernetes 用户在创建应用资源时常常是基于经验值来设置 request 和 limit。通过资源推荐的算法分析应用的真实用量推荐更合适的资源配置，您可以参考并采纳它提升集群的资源利用率。&lt;/p>
-&lt;h2 id="产品功能">产品功能&lt;/h2>
-&lt;p>资源推荐是 VPA 的轻量化实现，且更灵活。&lt;/p>
-&lt;ol>
-&lt;li>算法：算法模型采用了 VPA 的滑动窗口（Moving Window）算法，并且支持自定义算法的关键配置，提供了更高的灵活性&lt;/li>
-&lt;li>支持批量分析：通过 &lt;code>Analytics&lt;/code> 的 ResourceSelector，用户可以批量分析多个工作负载，而无需一个一个的创建 VPA 对象&lt;/li>
-&lt;li>更轻便：由于 VPA 的 Auto 模式在更新容器资源配置时会导致容器重建，因此很难在生产上使用自动模式，资源推荐给用户提供资源建议，把变更的决定交给用户决定&lt;/li>
-&lt;/ol>
-&lt;h2 id="创建资源分析">创建资源分析&lt;/h2>
-&lt;p>我们通过 deployment: &lt;code>nginx&lt;/code> 和 &lt;code>Analytics&lt;/code> 作为一个例子演示如何开始一次资源推荐之旅：&lt;/p>
-&lt;p>=== &amp;ldquo;Main&amp;rdquo;&lt;/p>
-&lt;pre>&lt;code> ```bash
-kubectl apply -f https://raw.githubusercontent.com/gocrane/crane/main/examples/analytics/nginx-deployment.yaml
-kubectl apply -f https://raw.githubusercontent.com/gocrane/crane/main/examples/analytics/analytics-resource.yaml
-kubectl get analytics
-```
-&lt;/code>&lt;/pre>
-&lt;p>=== &amp;ldquo;Mirror&amp;rdquo;&lt;/p>
-&lt;pre>&lt;code> ```bash
-kubectl apply -f https://gitee.com/finops/crane/raw/main/examples/analytics/nginx-deployment.yaml
-kubectl apply -f https://gitee.com/finops/crane/raw/main/examples/analytics/analytics-resource.yaml
-kubectl get analytics
-```
-&lt;/code>&lt;/pre>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Resource &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Resource&amp;#34; or &amp;#34;HPA&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Periodical &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Once&amp;#34; or &amp;#34;Periodical&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">periodSeconds&lt;/span>: &lt;span style="color:#ae81ff">86400&lt;/span> &lt;span style="color:#75715e"># analytics selected resources every 1 day&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceSelectors&lt;/span>: &lt;span style="color:#75715e"># defines all the resources to be select with&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>结果如下:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>NAME AGE
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>nginx-resource 16m
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>查看 Analytics 详情:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>kubectl get analytics nginx-resource -o yaml
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>结果如下:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Periodical&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">periodSeconds&lt;/span>: &lt;span style="color:#ae81ff">86400&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceSelectors&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labelSelector&lt;/span>: {}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">status&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">conditions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">lastTransitionTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-05-15T14:38:35Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">message&lt;/span>: &lt;span style="color:#ae81ff">Analytics is ready&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">reason&lt;/span>: &lt;span style="color:#ae81ff">AnalyticsReady&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">status&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;True&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Ready&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">lastUpdateTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-05-15T14:38:35Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">recommendations&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">lastStartTime&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-05-15T14:38:35Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">message&lt;/span>: &lt;span style="color:#ae81ff">Success&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource-resource-w45nq&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">targetRef&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uid&lt;/span>: &lt;span style="color:#ae81ff">750cb3bd-0b87-4f87-acbe-57e621af0a1e&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="查看分析结果">查看分析结果&lt;/h2>
-&lt;p>查看分析结果 &lt;strong>Recommendation&lt;/strong>：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>kubectl get recommend -l analysis.crane.io/analytics-name&lt;span style="color:#f92672">=&lt;/span>nginx-resource -o yaml
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>分析结果如下：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">items&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Recommendation&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">selector&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">matchLabels&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">template&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">creationTimestamp&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2022-06-15T15:26:25Z&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">generateName&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource-resource-&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">generation&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">annotations&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">topology.crane.io/topology-awareness&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span> &lt;span style="color:#75715e"># 添加注解，表示Pod需要感知CPU拓扑，资源分配不允许跨NUMA。若不指定，则拓扑策略默认继承节点上的topology.crane.io/topology-awareness标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">topology.crane.io/cpu-policy&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;exclusive&amp;#39;&lt;/span> &lt;span style="color:#75715e"># 添加注解，表示Pod的CPU分配策略为exclusive策略。&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">analysis.crane.io/analytics-name&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">analysis.crane.io/analytics-type&lt;/span>: &lt;span style="color:#ae81ff">Resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">analysis.crane.io/analytics-uid&lt;/span>: &lt;span style="color:#ae81ff">9e78964b-f8ae-40de-9740-f9a715d16280&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource-resource-t4xpn&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ownerReferences&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">blockOwnerDeletion&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">controller&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uid&lt;/span>: &lt;span style="color:#ae81ff">9e78964b-f8ae-40de-9740-f9a715d16280&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceVersion&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2117439429&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">selfLink&lt;/span>: &lt;span style="color:#ae81ff">/apis/analysis.crane.io/v1alpha1/namespaces/default/recommendations/nginx-resource-resource-t4xpn&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uid&lt;/span>: &lt;span style="color:#ae81ff">8005e3e0-8fe9-470b-99cf-5ce9dd407529&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">adoptionType&lt;/span>: &lt;span style="color:#ae81ff">StatusAndAnnotation&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Once&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">targetRef&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">status&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">recommendedValue&lt;/span>: |&lt;span style="color:#e6db74">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> resourceRequest:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> containers:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> - containerName: nginx
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> target:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> cpu: 100m
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> memory: 100Mi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">List&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceVersion&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">selfLink&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="批量推荐">批量推荐&lt;/h2>
-&lt;p>我们通过一个例子来演示如何使用 &lt;code>Analytics&lt;/code> 推荐集群中所有的 Deployment 和 StatefulSet：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">analysis.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Analytics&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">workload-resource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">crane-system &lt;/span> &lt;span style="color:#75715e"># The Analytics in Crane-system will select all resource across all namespaces.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">Resource &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Resource&amp;#34; or &amp;#34;Replicas&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">completionStrategyType&lt;/span>: &lt;span style="color:#ae81ff">Periodical &lt;/span> &lt;span style="color:#75715e"># This can only be &amp;#34;Once&amp;#34; or &amp;#34;Periodical&amp;#34;.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">periodSeconds&lt;/span>: &lt;span style="color:#ae81ff">86400&lt;/span> &lt;span style="color:#75715e"># analytics selected resources every 1 day&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resourceSelectors&lt;/span>: &lt;span style="color:#75715e"># defines all the resources to be select with&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">StatefulSet&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>当 namespace 等于 &lt;code>crane-system&lt;/code> 时，&lt;code>Analytics&lt;/code> 选择的资源是集群中所有的 namespace，当 namespace 不等于 &lt;code>crane-system&lt;/code> 时，&lt;code>Analytics&lt;/code> 选择 &lt;code>Analytics&lt;/code> namespace 下的资源&lt;/li>
-&lt;li>resourceSelectors 通过数组配置需要分析的资源，kind 和 apiVersion 是必填字段，name 选填&lt;/li>
-&lt;li>resourceSelectors 支持配置任意支持 &lt;a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#scale-subresource">Scale Subresource&lt;/a> 的资源&lt;/li>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resources&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">limits&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">cpu&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span> &lt;span style="color:#75715e"># 需要limits.cpu值，如果要开启绑核，则该值必须等于requests.cpu。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">memory&lt;/span>: &lt;span style="color:#ae81ff">2Gi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>从annotations中查看Pod的拓扑分配结果。发现Pod在NUMA Node0上被分配了2个CPU核心。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ kubectl get pod -o custom-columns&lt;span style="color:#f92672">=&lt;/span>name:metadata.name,topology-result:metadata.annotations.&lt;span style="color:#e6db74">&amp;#34;topology\.crane\.io/topology-result&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>name topology-result
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>nginx-deployment-754d99dcdf-mtcdp &lt;span style="color:#f92672">[{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;name&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;node0&amp;#34;&lt;/span>,&lt;span style="color:#e6db74">&amp;#34;type&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;Node&amp;#34;&lt;/span>,&lt;span style="color:#e6db74">&amp;#34;resources&amp;#34;&lt;/span>:&lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;capacity&amp;#34;&lt;/span>:&lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;cpu&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>&lt;span style="color:#f92672">}}}]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="为系统组件预留cpu">为系统组件预留CPU&lt;/h3>
+&lt;p>在某些场景下，我们希望能对kubelet预留的cpu做一些保护，使用场景包括但不限于：&lt;/p>
+&lt;ul>
+&lt;li>在混布场景下，不希望离线任务绑定系统预留的CPU核心，防止对k8s系统组件产生影响&lt;/li>
+&lt;li>0号核心在linux有独特用途，比如处理网络包、内核调用、处理中断等，因此不希望任务绑定0号核心&lt;/li>
+&lt;/ul>
+&lt;p>在Crane中，我们可以通过以下方式为系统组件预留CPU：&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>kubelet&lt;/code>设置预留CPU：按照&lt;a href="https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/#explicitly-reserved-cpu-list">官方指引&lt;/a>设置预留的CPU列表&lt;/li>
+&lt;li>查看&lt;code>NodeResourceTopology&lt;/code>对象，&lt;code>.spec.attributes&lt;/code>中的&lt;code>go.crane.io/reserved-system-cpus&lt;/code>存储了预留的CPU 列表&lt;/li>
+&lt;li>在Pod的annotations中添加&lt;code>topology.crane.io/exclude-reserved-cpus&lt;/code>，表征Pod不绑定预留的CPU核心&lt;/li>
 &lt;/ol>
-&lt;h2 id="资源推荐计算模型">资源推荐计算模型&lt;/h2>
-&lt;h3 id="筛选阶段">筛选阶段&lt;/h3>
-&lt;p>没有 Pod 的工作负载: 如果工作负载没有 Pod，无法进行算法分析。&lt;/p>
-&lt;h3 id="推荐">推荐&lt;/h3>
-&lt;p>采用 VPA 的滑动窗口（Moving Window）算法分别计算每个容器的 CPU 和 Memory 并给出对应的推荐值&lt;/p>
-&lt;h2 id="常见问题">常见问题&lt;/h2>
-&lt;h3 id="如何让推荐结果更准确">如何让推荐结果更准确&lt;/h3>
-&lt;p>应用在监控系统（比如 Prometheus）中的历史数据越久，推荐结果就越准确，建议生产上超过两周时间。对新建应用的预测往往不准，可以通过参数配置保证只对历史数据长度超过一定天数的业务推荐。&lt;/p></description></item><item><title>Docs: Crane-scheduler</title><link>/zh-cn/docs/tutorials/scheduling-pods-based-on-actual-node-load/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/scheduling-pods-based-on-actual-node-load/</guid><description>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx-reserve-cpus&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">nginx-reserve-cpus&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">replicas&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">selector&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">matchLabels&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">nginx-reserve-cpus&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">template&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">nginx-reserve-cpus&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">annotations&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">topology.crane.io/exclude-reserved-cpus&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span> &lt;span style="color:#75715e">##不绑定系统预留cpu核心&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">schedulerName&lt;/span>: &lt;span style="color:#ae81ff">crane-scheduler&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx:latest&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="4">
+&lt;li>登录到节点上，查看Pod绑定的CPUSet, 发现Pod在被分配了共享池中除预留核心外的其他CPU核心。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 未设置预留&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ /sys/fs/cgroup/cpuset/kubepods J# cat besteffort/pod760a7e79-4+0b-4a16-8393-0f0c253ce26c/3c6bd8251e88543235f01bacf72406c5b249edd26747cc12fd1e6fc5535edec/cpuset.cpus
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>0-15,20-47,52-63
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 预留0号核心&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ /sys/fs/cgroup/cpuset/kubepods &lt;span style="color:#f92672">]&lt;/span>&lt;span style="color:#75715e"># cat besteffort/pod6afa5fe5-ba43-490a-9fa0-034fc23f440b/b574be6egedc916517bc4feb66078d3148d29bf5db5eb2cd379873e1157c1d4/cpuset.cpus&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1-15,20-47,52-63
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: Crane-scheduler</title><link>/zh-cn/docs/tutorials/scheduling-pods-based-on-actual-node-load/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/scheduling-pods-based-on-actual-node-load/</guid><description>
 &lt;p>Crane-scheduler 是一组基于&lt;a href="https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/">scheduler framework&lt;/a>的调度插件， 包含：&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="/zh-cn/docs/tutorials/dynamic-scheduler-plugin">Dynamic scheduler：负载感知调度器插件&lt;/a>&lt;/li>
@@ -734,135 +417,7 @@ kubectl apply -f https://gitee.com/finops/crane-scheduler/raw/main/deploy/contro
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Type Reason Age From Message
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---- ------ ---- ---- -------
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Normal Scheduled 28s crane-scheduler Successfully assigned default/cpu-stress-7669499b57-zmrgb to vm-162-247-ubuntu
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: DSP 预测算法</title><link>/zh-cn/docs/tutorials/timeseriees-forecasting-by-dsp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/timeseriees-forecasting-by-dsp/</guid><description>
-&lt;p>Crane使用在数字信号处理（Digital Signal Processing）领域中常用的的&lt;code>离散傅里叶变换&lt;/code>、&lt;code>自相关函数&lt;/code>等手段，识别、预测周期性的时间序列。&lt;/p>
-&lt;p>本文将介绍DSP算法的实现流程和参数设置，以便帮助大家了解算法背后的原理，并将它应用到实际场景中。 （相关代码位于&lt;code>pkg/prediction/dsp&lt;/code>目录下）&lt;/p>
-&lt;h2 id="流程">流程&lt;/h2>
-&lt;p>&lt;img src="/images/algorithm/dsp/dsp.png" alt="">&lt;/p>
-&lt;h3 id="预处理">预处理&lt;/h3>
-&lt;h4 id="填充缺失数据">填充缺失数据&lt;/h4>
-&lt;p>监控数据在某些时间点上缺失是很常见的现象，Crane会根据前后的数据对缺失的采样点进行填充。做法如下：&lt;/p>
-&lt;p>假设第$m$个与第$n$个采样点之间采样数据缺失（$m+1 &amp;lt; n$）,设在$m$和$n$点的采样值分别为$v_m$和$v_n$，令$$\Delta = {v_n-v_m \over n-m}$$，则$m$和$n$之间的填充数据依次为$v_m+\Delta , v_m+2\Delta , &amp;hellip;$&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/missing_data_fill.png" alt="">&lt;/p>
-&lt;h4 id="去除异常点">去除异常点&lt;/h4>
-&lt;p>监控数据中偶尔会出现一些极端的异常数据点，导致这些异常点（outliers）的原因有很多，例如：&lt;/p>
-&lt;ol>
-&lt;li>监控系统用0值填充缺失的采样点；&lt;/li>
-&lt;li>被监控组件由于自身的bug上报了错误的指标数据；&lt;/li>
-&lt;li>应用启动时会消耗远超正常运行时的资源&lt;/li>
-&lt;/ol>
-&lt;p>这些极端的异常点对于信号的周期判断会造成干扰，需要进行去除。做法如下：&lt;/p>
-&lt;p>选取实际序列中所有采样点的$P99.9$和$P0.1$，分别作为上、下限阈值，如果某个采样值低于下限或者高于上限，将采样点的值设置为前一个采样值。&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/remove_outliers.png" alt="">&lt;/p>
-&lt;h4 id="离散傅里叶变换">离散傅里叶变换&lt;/h4>
-&lt;p>对监控的时间序列（设长度为$N$）做快速离散傅里叶变换（FFT），得到信号的频谱图（spectrogram），频谱图直观地表现为在各个离散点$k$处的「冲击」。
-冲击的高度为$k$对应周期分量的「幅度」，$k$的取值范围$(0,1,2, &amp;hellip; N-1)$。&lt;/p>
-&lt;p>$k = 0$对应信号的「直流分量」，对于周期没有影响，因此忽略。&lt;/p>
-&lt;p>由于离散傅里叶变换后的频谱序列前一半和后一半是共轭对称的，反映到频谱图上就是关于轴对称，因此只看前一半$N/2$即可。&lt;/p>
-&lt;p>$k$所对应的周期$$T = {N \over k} \bullet SampleInterval$$&lt;/p>
-&lt;p>要观察一个信号是不是以$T$为周期，至少需要观察两倍的$T$的长度，因此通过长度为$N$的序列能够识别出的最长周期为$N/2$。所以可以忽略$k = 1$。&lt;/p>
-&lt;p>至此，$k$的取值范围为$(2, 3, &amp;hellip; , N/2)$，对应的周期为$N/2, N/3, &amp;hellip;$，这也就是FFT能够提供的周期信息的「分辨率」。如果一个信号的周期没有落到$N/k$上，它会散布到整个频域，导致「频率泄漏」。
-好在在实际生产环境中，我们通常遇到的应用（尤其是在线业务），如果有规律，都是以「天」为周期的，某些业务可能会有所谓的「周末」效应，即周末和工作日不太一样，如果扩大到「周」的粒度去观察，它们同样具有良好的周期性。&lt;/p>
-&lt;p>Crane没有尝试发现任意长度的周期，而是指定几个固定的周期长度（$1d、7d$）去判断。并通过截取、填充的方式，保证序列的长度$N$为待检测周期$T$的整倍数，例如：$T=1d，N=3d；T=7d，N=14d$。&lt;/p>
-&lt;p>我们从生产环境中抓取了一些应用的监控指标，保存为csv格式，放到&lt;code>pkg/prediction/dsp/test_data&lt;/code>目录下。
-例如，&lt;code>input0.csv&lt;/code>文件包括了一个应用连续8天的CPU监控数据，对应的时间序列如下图：&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/input0.png" alt="">&lt;/p>
-&lt;p>我们看到，尽管每天的数据不尽相同，但大体「模式」还是基本一致的。&lt;/p>
-&lt;p>对它做FFT，会得到下面的频谱图：&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/spectrum.png" alt="">&lt;/p>
-&lt;p>我们发现在几个点上的「幅值」明显高于其它点，这些点便可以作为我们的「候选周期」，待进一步的验证。&lt;/p>
-&lt;p>上面是我们通过直觉判断的，Crane是如何挑选「候选周期」的呢？&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>对原始序列$\vec x(n)$进行一个随机排列后得到序列$\vec x&amp;rsquo;(n)$，再对$\vec x&amp;rsquo;(n)$做FFT得到$\vec X&amp;rsquo;(k)$，令$P_{max} = argmax|\vec X&amp;rsquo;(k)|$。&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>重复100次上述操作，得到100个$P_{max}$，取$P99$作为阈值$P_{threshold}$。&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>对原始序列$\vec x(n)$做FFT得到$\vec X(f)$，遍历$k = 2, 3, &amp;hellip;$，如果$P_k = |X(k)| &amp;gt; P_{threshold}$，则将$k$加入候选周期。&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;h4 id="循环自相关函数">循环自相关函数&lt;/h4>
-&lt;p>自相关函数（Auto Correlation Function，ACF）是一个信号于其自身在不同时间点的互相关。通俗的讲，它就是两次观察之间的相似度对它们之间的时间差的函数。&lt;/p>
-&lt;p>Crane使用循环自相关函数（Circular ACF），先对长度为$N$的时间序列以$N$为周期做扩展，也就是在$&amp;hellip;, [-N, -1], [N, 2N-1], &amp;hellip;$区间上复制$\vec x(n)$，得到一个新的序列$\vec x&amp;rsquo;(n)$。
-再依次计算将$\vec x&amp;rsquo;(n)$依次平移$k=1,2,3,&amp;hellip;N/2$后的$\vec x&amp;rsquo;(n+k)$与$\vec x&amp;rsquo;(n)$的相关系数&lt;/p>
-&lt;p>$$r_k={\displaystyle\sum_{i=-k}^{N-k-1} (x_i-\mu)(x_{i+k}-\mu) \over \displaystyle\sum_{i=0}^{N-1} (x_i-\mu)^2}\ \ \ \mu: mean$$&lt;/p>
-&lt;p>Crane没有直接使用上面的定义去计算ACF，而是根据下面的公式，通过两次$(I)FFT$，从而能够在$O(nlogn)$的时间内完成ACF的计算。
-$$\vec r = IFFT(|FFT({\vec x - \mu \over \sigma})|^2)\ \ \ \mu: mean,\ \sigma: standard\ deviation$$&lt;/p>
-&lt;p>ACF的图像如下所示，横轴代表信号平移的时间长度$k$；纵轴代表自相关系数$r_k$，反应了平移信号与原始信号的「相似」程度。&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/acf.png" alt="">&lt;/p>
-&lt;p>Crane会依次验证每一个候选周期对应的自相关系数是否位于「山顶」上；并且选择对应「最高峰」的那个候选周期为整个时间序列的主周期（基波周期），并以此为基础进行预测。&lt;/p>
-&lt;p>如何判断「山顶」？&lt;/p>
-&lt;p>Crane在两侧个各选取一段曲线，分别做线性回归，当回归后左、右的直线斜率分别大于、小于零时，则认为这个点是在一个「山顶」上。&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/linear_regression.png" alt="">&lt;/p>
-&lt;h4 id="预测">预测&lt;/h4>
-&lt;p>根据上一步得到的主周期，Crane提供了两种方式去拟合（预测）下一个周期的时序数据
-&lt;strong>maxValue&lt;/strong>&lt;/p>
-&lt;p>选取过去几个周期中相同时刻$t$（例如：下午6:00）中的最大值，作为下一个周期$t$时刻的预测值。&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/max_value.png" alt="">
-&lt;strong>fft&lt;/strong>&lt;/p>
-&lt;p>对原始时间序列做FFT得到频谱序列，去除「高频噪声」后，再做IFFT（逆快速傅里叶变换），将得到的时间序列作为下一个周期的预测结果。&lt;/p>
-&lt;h2 id="应用">应用&lt;/h2>
-&lt;p>Crane提供了&lt;code>TimeSeriesPrediction&lt;/code>，通过这个CRD，用户可以对各种时间序列进行预测，例如工作负责的CPU利用率、应用的QPS等等。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">prediction.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">TimeSeriesPrediction&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">tsp-workload-dsp&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">targetRef&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">apps/v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Deployment&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">test&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">predictionWindowSeconds&lt;/span>: &lt;span style="color:#ae81ff">7200&lt;/span> &lt;span style="color:#75715e"># 提供未来7200秒（2小时）的预测数据。Crane会把预测数据写到status中。&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">predictionMetrics&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">resourceIdentifier&lt;/span>: &lt;span style="color:#ae81ff">workload-cpu&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">type&lt;/span>: &lt;span style="color:#ae81ff">ExpressionQuery&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">expressionQuery&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">expression&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;sum (irate (container_cpu_usage_seconds_total{container!=&amp;#34;&amp;#34;,image!=&amp;#34;&amp;#34;,container!=&amp;#34;POD&amp;#34;,pod=~&amp;#34;^test-.*$&amp;#34;}[1m]))&amp;#39;&lt;/span> &lt;span style="color:#75715e"># 获取历史监控数据的查询语句&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">algorithm&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">algorithmType&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;dsp&amp;#34;&lt;/span> &lt;span style="color:#75715e"># 指定dsp为预测算法&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">dsp&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">sampleInterval&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;60s&amp;#34;&lt;/span> &lt;span style="color:#75715e"># 监控数据的采样间隔为1分钟&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">historyLength&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;15d&amp;#34;&lt;/span> &lt;span style="color:#75715e"># 拉取过去15天的监控指标作为预测的依据&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">estimators&lt;/span>: &lt;span style="color:#75715e"># 指定预测方式，包括&amp;#39;maxValue&amp;#39;和&amp;#39;fft&amp;#39;，每一类可以指定多个estimator，配置不同的参数，crane会选取一个拟合度最高的去产生预测结果。如果不指定的话，默认使用&amp;#39;fft&amp;#39;。&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># maxValue:&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># - marginFraction: &amp;#34;0.1&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">fft&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">marginFraction&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0.2&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">lowAmplitudeThreshold&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1.0&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">highFrequencyThreshold&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0.05&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">minNumOfSpectrumItems&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">maxNumOfSpectrumItems&lt;/span>: &lt;span style="color:#ae81ff">20&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>上面示例中的一些dsp参数含义如下：&lt;/p>
-&lt;p>&lt;strong>maxValue&lt;/strong>&lt;/p>
-&lt;p>&lt;code>marginFraction&lt;/code>: 拟合出下一个周期的序列后，将每一个预测值乘以&lt;code>1 + marginFraction&lt;/code>，例如&lt;code>marginFraction = 0.1&lt;/code>,就是乘以1.1。&lt;code>marginFraction&lt;/code>的作用是将预测数据进行一定比例的放大（或缩小）。&lt;/p>
-&lt;p>&lt;strong>fft&lt;/strong>&lt;/p>
-&lt;p>&lt;code>marginFraction&lt;/code>: 拟合出下一个周期的序列后，将每一个预测值乘以&lt;code>1 + marginFraction&lt;/code>，例如&lt;code>marginFraction = 0.1&lt;/code>,就是乘以1.1。&lt;code>marginFraction&lt;/code>的作用是将预测数据进行一定比例的放大（或缩小）。&lt;/p>
-&lt;p>&lt;code>lowAmplitudeThreshold&lt;/code>: 频谱幅度下限，所有幅度低于这个下限的频率分量将被滤除。&lt;/p>
-&lt;p>&lt;code>highFrequencyThreshold&lt;/code>: 频率上限，所有频率高于这个上限的频率分量将被滤除。单位Hz，例如如果想忽略长度小于1小时的周期分量，设置&lt;code>highFrequencyThreshold = 1/3600&lt;/code>。&lt;/p>
-&lt;p>&lt;code>minNumOfSpectrumItems&lt;/code>: 至少保留频率分量的个数。&lt;/p>
-&lt;p>&lt;code>maxNumOfSpectrumItems&lt;/code>：至多保留频率分量的个数。&lt;/p>
-&lt;p>简单来说，保留频率分量的数量越少、频率上限越低、频谱幅度下限越高，预测出来的曲线越光滑，但会丢失一些细节；反之，曲线毛刺越多，保留更多细节。&lt;/p>
-&lt;p>下面是对同一时段预测的两条曲线，蓝色、绿色的&lt;code>highFrequencyThreshold&lt;/code>分别为$0.01$和$0.001$，蓝色曲线过滤掉了更多的高频分量，因此更为平滑。&lt;/p>
-&lt;p>&lt;img src="/images/algorithm/dsp/lft_0_001.png" alt=""> &lt;img src="/images/algorithm/dsp/lft_0_01.png" alt="">&lt;/p>
-&lt;p>并没有一套参数配置适合所有的时间序列，通常需要根据应用指标的特点，去调整算法参数，以期获得最佳的预测效果。
-Crane提供了一个web接口，使用者可以在调整参数后，直观的看到预测效果，使用步骤如下：&lt;/p>
-&lt;ol>
-&lt;li>修改&lt;code>TimeSeriesPrediction&lt;/code>中的&lt;code>estimators&lt;/code>的参数。&lt;/li>
-&lt;li>访问craned http server的&lt;code>api/prediction/debug/&amp;lt;namespace&amp;gt;/&amp;lt;timeseries prediction name&amp;gt;&lt;/code>，查看参数效果（如下图）。&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="/images/algorithm/dsp/dsp_debug.png" alt="">&lt;/p>
-&lt;p>上述步骤可多次执行，直到得到满意的预测效果。&lt;/p>
-&lt;p>&lt;strong>通过port-forward进行本地调试&lt;/strong>&lt;/p>
-&lt;p>craned http server的端口通过craned启动参数&lt;code>--server-bind-port&lt;/code>设置，默认为&lt;code>8082&lt;/code>。&lt;/p>
-&lt;p>打开终端，&lt;/p>
-&lt;pre tabindex="0">&lt;code>$kubectl -n crane-system port-forward service/craned 8082:8082
-Forwarding from 127.0.0.1:8082 -&amp;gt; 8082
-Forwarding from [::1]:8082 -&amp;gt; 8082
-&lt;/code>&lt;/pre>&lt;p>打开浏览器，访问&lt;code>http://localhost:8082/api/prediction/debug/&amp;lt;namespace&amp;gt;/&amp;lt;timeseries prediction name&amp;gt;&lt;/code>&lt;/p></description></item><item><title>Docs: Effective HorizontalPodAutoscaler</title><link>/zh-cn/docs/tutorials/using-effective-hpa-to-scaling-with-effectiveness/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/using-effective-hpa-to-scaling-with-effectiveness/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: Effective HorizontalPodAutoscaler</title><link>/zh-cn/docs/tutorials/using-effective-hpa-to-scaling-with-effectiveness/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/using-effective-hpa-to-scaling-with-effectiveness/</guid><description>
 &lt;p>EffectiveHorizontalPodAutoscaler（简称 EHPA）是 Crane 提供的弹性伸缩产品，它基于社区 HPA 做底层的弹性控制，支持更丰富的弹性触发策略（预测，观测，周期），让弹性更加高效，并保障了服务的质量。&lt;/p>
 &lt;ul>
 &lt;li>提前扩容，保证服务质量：通过算法预测未来的流量洪峰提前扩容，避免扩容不及时导致的雪崩和服务稳定性故障。&lt;/li>
@@ -1152,8 +707,8 @@ targetReplicas: 80
 &lt;p>通过 EHPA，用户可以同时配置 &lt;code>CronMetric&lt;/code>、&lt;code>PredictionMetric&lt;/code>、&lt;code>OriginalMetric&lt;/code>。&lt;/p>
 &lt;p>&lt;strong>我们强烈建议你配置所有维度的指标。它们分别代表 cron 副本、先前预测的副本、后观察的副本。&lt;/strong>&lt;/p>
 &lt;p>这是一个强大的功能。因为 HPA 总是选择由所有维度&lt;code>metrics&lt;/code>计算的最大副本进行扩展。&lt;/p>
-&lt;p>这将保证你工作负载的 QoS，当你同时配置三种类型的自动缩放时，根据实际观察到的指标计算的副本最大，然后它将使用最大的一个。&lt;/p>
-&lt;p>尽管由于某些意想不到的原因，导致由&lt;code>PredictionMetric&lt;/code>计算的副本更小。因此，你不必担心 QoS。&lt;/p>
+&lt;p>这将保证你工作负载的 QOS，当你同时配置三种类型的自动缩放时，根据实际观察到的指标计算的副本最大，然后它将使用最大的一个。&lt;/p>
+&lt;p>尽管由于某些意想不到的原因，导致由&lt;code>PredictionMetric&lt;/code>计算的副本更小。因此，你不必担心 QOS。&lt;/p>
 &lt;h4 id="mechanism">Mechanism&lt;/h4>
 &lt;p>当&lt;code>metrics adapter&lt;/code>处理&lt;code>external cron metrics&lt;/code>请求时，&lt;code>metrics adapter&lt;/code>将执行以下步骤。&lt;/p>
 &lt;pre tabindex="0">&lt;code class="language-mermaid" data-lang="mermaid">graph LR
@@ -1231,363 +786,7 @@ F[Result workload replicas];
 &lt;ul>
 &lt;li>等一段时间再看。预测算法 &lt;code>DSP&lt;/code> 需要一定时间的数据才能进行预测。希望了解算法细节的可以查看算法的文档。&lt;/li>
 &lt;li>EffectiveHorizontalPodAutoscaler 提供一种保护机制，当预测失效时依然能通过实际的 CPU 使用率工作。&lt;/li>
-&lt;/ul></description></item><item><title>Docs: QoS Ensurance</title><link>/zh-cn/docs/tutorials/using-qos-ensurance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/using-qos-ensurance/</guid><description>
-&lt;p>Qos Ensurance 保证了运行在 Kubernetes 上的 Pod 的稳定性。&lt;/p>
-&lt;p>具有干扰检测和主动回避能力，当较高优先级的 Pod 受到资源竞争的影响时，Disable Schedule、Throttle以及Evict 将应用于低优先级的 Pod，支持自定义指标干扰检测和自定义操作；&lt;/p>
-&lt;p>同时具备增强的旁路cpuset管理能力，在绑核的同时提升资源利用效率。&lt;/p>
-&lt;p>具有预测算法增强的动态资源超卖能力，将空闲资源复用起来，同时结合crane的预测能力，更好地复用闲置资源。同时具有弹性资源限制功能，限制复用空闲资源的workload。&lt;/p>
-&lt;h2 id="qos-ensurance-架构">Qos Ensurance 架构&lt;/h2>
-&lt;p>Qos ensurance 的架构如下图所示。它包含三个模块。&lt;/p>
-&lt;ol>
-&lt;li>&lt;code>State Collector&lt;/code>：定期收集指标&lt;/li>
-&lt;li>&lt;code>Anomaly Analyzer&lt;/code>：使用收集指标，以分析节点是否发生异常&lt;/li>
-&lt;li>&lt;code>Action Executor&lt;/code>：执行回避动作，包括 Disable Scheduling、Throttle 和 Eviction。&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="/images/crane-qos-ensurance.png" alt="crane-qos-enurance">&lt;/p>
-&lt;p>主要流程：&lt;/p>
-&lt;ol>
-&lt;li>&lt;code>State Collector&lt;/code> 从 kube-apiserver 同步策略。&lt;/li>
-&lt;li>如果策略发生更改，&lt;code>State Collector&lt;/code>会更新指标收集规则。&lt;/li>
-&lt;li>&lt;code>State Collector&lt;/code>定期收集指标。&lt;/li>
-&lt;li>&lt;code>State Collector&lt;/code>将指标传输到&lt;code>Anomaly Analyzer&lt;/code>。&lt;/li>
-&lt;li>&lt;code>Anomaly Analyzer&lt;/code>对所有规则进行范围分析，以分析达到的回避阈值或恢复阈值。&lt;/li>
-&lt;li>&lt;code>Anomaly Analyzer&lt;/code>合并分析结果并通知&lt;code>Action Executor&lt;/code>执行回避动作。&lt;/li>
-&lt;li>&lt;code>Action Executor&lt;/code>根据分析结果执行动作。&lt;/li>
-&lt;/ol>
-&lt;h2 id="干扰检测和主动回避">干扰检测和主动回避&lt;/h2>
-&lt;h3 id="disable-scheduling">Disable Scheduling&lt;/h3>
-&lt;p>定义 &lt;code>AvoidanceAction&lt;/code> 和 &lt;code>NodeQOSEnsurancePolicy&lt;/code>。&lt;/p>
-&lt;p>当节点 CPU 使用率触发回避阈值时，将该节点设置为禁用调度。&lt;/p>
-&lt;p>示例 YAML 如下所示：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">ensurance.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">AvoidanceAction&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">system&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">disablescheduling&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">description&lt;/span>: &lt;span style="color:#ae81ff">disable schedule new pods to the node&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">coolDownSeconds&lt;/span>: &lt;span style="color:#ae81ff">300&lt;/span> &lt;span style="color:#75715e">#(1) &lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>节点从禁止调度状态到正常状态的最小等待时间&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">ensurance.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">NodeQOSEnsurancePolicy&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;waterline1&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;system&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nodeQualityProbe&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">timeoutSeconds&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nodeLocalGet&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">localCacheTTLSeconds&lt;/span>: &lt;span style="color:#ae81ff">60&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">objectiveEnsurances&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;cpu-usage&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">avoidanceThreshold&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#75715e">#(1) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restoreThreshold&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#75715e">#(2)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">actionName&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;disablescheduling&amp;#34;&lt;/span> &lt;span style="color:#75715e">#(3) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">strategy&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;None&amp;#34;&lt;/span> &lt;span style="color:#75715e">#(4) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">metricRule&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;cpu_total_usage&amp;#34;&lt;/span> &lt;span style="color:#75715e">#(5) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">value&lt;/span>: &lt;span style="color:#ae81ff">4000&lt;/span> &lt;span style="color:#75715e">#(6) &lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>当达到阈值并持续多次，那么我们认为规则被触发&lt;/li>
-&lt;li>当阈值未达到并继续多次, 那么我们认为规则已恢复&lt;/li>
-&lt;li>关联到 AvoidanceAction 名称&lt;/li>
-&lt;li>动作的策略，你可以将其设置为“预览”以不实际执行&lt;/li>
-&lt;li>指标名称&lt;/li>
-&lt;li>指标的阈值&lt;/li>
-&lt;/ol>
-&lt;p>请观看视频以了解更多&lt;code>Disable Scheduling&lt;/code>的细节。&lt;/p>
-&lt;script id="asciicast-480735" src="https://asciinema.org/a/480735.js" async>&lt;/script>
-&lt;h3 id="throttle">Throttle&lt;/h3>
-&lt;p>定义 &lt;code>AvoidanceAction&lt;/code> 和 &lt;code>NodeQOSEnsurancePolicy&lt;/code>。&lt;/p>
-&lt;p>当节点 CPU 使用率触发回避阈值时，将执行节点的&lt;code>Throttle Action&lt;/code>。&lt;/p>
-&lt;p>示例 YAML 如下所示：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">ensurance.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">AvoidanceAction&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">throttle&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">system&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">coolDownSeconds&lt;/span>: &lt;span style="color:#ae81ff">300&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">throttle&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">cpuThrottle&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">minCPURatio&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#75715e">#(1)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">stepCPURatio&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#75715e">#(2) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">description&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;throttle low priority pods&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>
-&lt;p>CPU 配额的最小比例，如果 pod 被限制低于这个比例，就会被设置为这个。&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>该配置设置给&lt;code>Throttle Action&lt;/code>。它将在每个触发的回避动作中减少这个 CPU 配额占比。它会在每个恢复动作中增加这个 CPU 配额占比。&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">ensurance.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">NodeQOSEnsurancePolicy&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;waterline2&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;system&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nodeQualityProbe&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">timeoutSeconds&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nodeLocalGet&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">localCacheTTLSeconds&lt;/span>: &lt;span style="color:#ae81ff">60&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">objectiveEnsurances&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;cpu-usage&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">avoidanceThreshold&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restoredThreshold&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">actionName&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;throttle&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">strategy&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;None&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">metricRule&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;cpu_total_usage&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">value&lt;/span>: &lt;span style="color:#ae81ff">6000&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="eviction">Eviction&lt;/h3>
-&lt;p>下面的 YAML 是另一种情况，当节点 CPU 使用率触发阈值时，节点上的低优先级 pod 将被驱逐。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">ensurance.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">AvoidanceAction&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">eviction&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#ae81ff">system&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">coolDownSeconds&lt;/span>: &lt;span style="color:#ae81ff">300&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">eviction&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">terminationGracePeriodSeconds&lt;/span>: &lt;span style="color:#ae81ff">30&lt;/span> &lt;span style="color:#75715e">#(1) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">description&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;evict low priority pods&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>pod 需要优雅终止的持续时间（以秒为单位）。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">ensurance.crane.io/v1alpha1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">NodeQOSEnsurancePolicy&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;waterline3&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">app&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;system&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nodeQualityProbe&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">timeoutSeconds&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nodeLocalGet&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">localCacheTTLSeconds&lt;/span>: &lt;span style="color:#ae81ff">60&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">objectiveEnsurances&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;cpu-usage&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">avoidanceThreshold&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restoreThreshold&lt;/span>: &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">actionName&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;eviction&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">strategy&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Preview&amp;#34;&lt;/span> &lt;span style="color:#75715e">#(1) &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">metricRule&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;cpu_total_usage&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">value&lt;/span>: &lt;span style="color:#ae81ff">6000&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>回避动作策略。当设置为&lt;code>Preview&lt;/code>时，将不会被实际执行&lt;/p>
-&lt;h3 id="supported-metrics">Supported Metrics&lt;/h3>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Name&lt;/th>
-&lt;th>Description&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>cpu_total_usage&lt;/td>
-&lt;td>node cpu usage&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>cpu_total_utilization&lt;/td>
-&lt;td>node cpu utilization&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;h3 id="精确执行回避动作">精确执行回避动作&lt;/h3>
-&lt;p>通过如下两点进行，避免了对于低优pod的过度操作的同时能够更快地降低指标到指定水位线的差距，保障高优业务不受影响&lt;/p>
-&lt;ol>
-&lt;li>排序pod&lt;/li>
-&lt;/ol>
-&lt;p>crane实现了一些通用的排序方法（之后会更多地完善）：&lt;/p>
-&lt;p>classAndPriority： 比较两个pod的QOSClass和class value，优先比较QOSClass，再比较class value；priority高的排在后面优先级更高&lt;/p>
-&lt;p>runningTime：比较两个pod的运行时间，运行时间长的排在后面优先级更高&lt;/p>
-&lt;p>如果仅需使用这两个排序策略，使用默认的排序方法即可：会首先比较pod的优先级，之后比较pod对应指标的用量，之后比较pod的运行时长，有一个维度可以比较出结果即为pod的排序结果&lt;/p>
-&lt;p>以cpu usage指标的排序为例，还扩展了一些与自身指标相关的排序策略， 如cpu usage 使用量的排序，会依次比较两个pod的优先级，如果优先级相同的情况下，再比较cpu用量，如果cpu用量也相同的情况下继续比较扩展cpu资源用量, 最后比较pod的运行时长，当某一个指标存在差异时即可返回比较结果：&lt;code>orderedBy(classAndPriority, cpuUsage, extCpuUsage, runningTime).Sort(pods)&lt;/code>&lt;/p>
-&lt;ol start="2">
-&lt;li>参考水位线和pod用量执行回避动作
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">//将所有触发水位线的metrics根据其Quantified属性区分为两部分
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">metricsQuantified&lt;/span>, &lt;span style="color:#a6e22e">MetricsNotQuantified&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ThrottleDownWaterLine&lt;/span>.&lt;span style="color:#a6e22e">DivideMetricsByQuantified&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 如果存在不可Quantified的metric，获取具有最高ActionPriority的一个throttleAble的metric对所选择的所有pod进行操作
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">if&lt;/span> len(&lt;span style="color:#a6e22e">MetricsNotThrottleQuantified&lt;/span>) &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">highestPrioriyMetric&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">GetHighestPriorityThrottleAbleMetric&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">t&lt;/span>.&lt;span style="color:#a6e22e">throttlePods&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">totalReleased&lt;/span>, &lt;span style="color:#a6e22e">highestPrioriyMetric&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>} &lt;span style="color:#66d9ef">else&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取节点和workload的最新用量，构造和水位线差距
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">ThrottoleDownGapToWaterLines&lt;/span> = &lt;span style="color:#a6e22e">buildGapToWaterLine&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>.&lt;span style="color:#a6e22e">getStateFunc&lt;/span>())
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//如果触发水位线中存在metric的实时用量无法获取，则获取具有最高ActionPriority的一个throttleAble的metric对所选择的所有pod进行压制操作
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">ThrottoleDownGapToWaterLines&lt;/span>.&lt;span style="color:#a6e22e">HasUsageMissedMetric&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">highestPrioriyMetric&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ThrottleDownWaterLine&lt;/span>.&lt;span style="color:#a6e22e">GetHighestPriorityThrottleAbleMetric&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">errPodKeys&lt;/span> = &lt;span style="color:#a6e22e">throttlePods&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">totalReleased&lt;/span>, &lt;span style="color:#a6e22e">highestPrioriyMetric&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">released&lt;/span> &lt;span style="color:#a6e22e">ReleaseResource&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//遍历触发水位线的metric中可以量化的metric：如果metric具有排序方法则直接使用其SortFunc对pod进行排序，否则使用GeneralSorter排序；
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">//之后使用其对应的操作方法对pod执行操作，并计算释放出来的对应metric的资源量，直到对应metric到水位线的差距已不存在
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">metricsQuantified&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">SortAble&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">SortFunc&lt;/span>(&lt;span style="color:#a6e22e">ThrottleDownPods&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">GeneralSorter&lt;/span>(&lt;span style="color:#a6e22e">ThrottleDownPods&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> !&lt;span style="color:#a6e22e">ThrottoleDownGapToWaterLines&lt;/span>.&lt;span style="color:#a6e22e">TargetGapsRemoved&lt;/span>(&lt;span style="color:#a6e22e">m&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">ThrottleDownPods&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">released&lt;/span> = &lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">ThrottleFunc&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">ThrottleDownPods&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">totalReleased&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ThrottoleDownGapToWaterLines&lt;/span>[&lt;span style="color:#a6e22e">m&lt;/span>] &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#a6e22e">released&lt;/span>[&lt;span style="color:#a6e22e">m&lt;/span>]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
-&lt;/ol>
-&lt;p>关于扩展自定义指标和排序参考 &amp;ldquo;自定义指标干扰检测回避和自定义排序&amp;rdquo; 部分&lt;/p>
-&lt;h2 id="增强的旁路cpuset管理能力">增强的旁路cpuset管理能力&lt;/h2>
-&lt;p>kubelet支持static的cpu manager策略，当guaranteed pod运行在节点上时，kebelet会为该pod分配指定的专属cpu，其他进程无法占用，这保证了guaranteed pod的cpu独占，但是也造成了cpu和节点的的利用率较低，造成了一定的浪费。
-crane agent为cpuset管理提供了新的策略，允许pod和其他pod共享cpu当其指定了cpu绑核时，可以在利用绑核更少的上下文切换和更高的缓存亲和性的优点的前提下，还能让其他workload部署共用，提升资源利用率。&lt;/p>
-&lt;ol>
-&lt;li>提供了3种pod cpuset类型：&lt;/li>
-&lt;/ol>
-&lt;ul>
-&lt;li>
-&lt;p>exclusive：绑核后其他container不能再使用该cpu，独占cpu&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>share：绑核后其他container可以使用该cpu&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>none：选择没有被exclusive pod的container占用的cpu，可以使用share类型的绑核&lt;/p>
-&lt;p>share类型的绑核策略可以在利用绑核更少的上下文切换和更高的缓存亲和性的优点的前提下，还能让其他workload部署共用，提升资源利用率&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;ol start="2">
-&lt;li>
-&lt;p>放宽了kubelet中绑核的限制&lt;/p>
-&lt;p>原先需要所有container的CPU limit与CPU request相等 ，这里只需要任意container的CPU limit大于或等于1且等于CPU request即可为该container设置绑核&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>支持在pod运行过程中修改pod的 cpuset policy，会立即生效&lt;/p>
-&lt;p>pod的cpu manager policy从none转换到share，从exclusive转换到share，均无需重启&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>使用方法：&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>设置kubelet的cpuset manager为&amp;quot;none&amp;quot;&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>通过pod annotation设置cpu manager policy&lt;/p>
-&lt;p>&lt;code>qos.gocrane.io/cpu-manager: none/exclusive/share&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Pod&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">annotations&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">qos.gocrane.io/cpu-manager&lt;/span>: &lt;span style="color:#ae81ff">none/exclusive/share&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
-&lt;/ol>
-&lt;h2 id="预测算法增强的动态资源超卖">预测算法增强的动态资源超卖&lt;/h2>
-&lt;p>为了提高稳定性，通常用户在部署应用的时候会设置高于实际使用量的Request值，造成资源的浪费，为了提高节点的资源利用率，用户会搭配部署一些BestEffort的应用，利用闲置资源，实现超卖；
-但是这些应用由于缺乏资源limit和request的约束和相关信息，调度器依旧可能将这些pod调度到负载较高的节点上去，这与我们的初衷是不符的，所以最好能依据节点的空闲资源量进行调度。&lt;/p>
-&lt;p>crane通过如下两种方式收集了节点的空闲资源量，综合后作为节点的空闲资源量，增强了资源评估的准确性：&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>通过本地收集的cpu用量信息&lt;br>
-&lt;code>nodeCpuCannotBeReclaimed := nodeCpuUsageTotal + exclusiveCPUIdle - extResContainerCpuUsageTotal&lt;/code>&lt;/p>
-&lt;p>exclusiveCPUIdle是指被cpu manager policy为exclusive的pod占用的cpu的空闲量，虽然这部分资源是空闲的，但是因为独占的原因，是无法被复用的，因此加上被算作已使用量&lt;/p>
-&lt;p>extResContainerCpuUsageTotal是指被作为动态资源使用的cpu用量，需要减去以免被二次计算&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>创建节点cpu使用量的TSP，默认情况下自动创建，会根据历史预测节点CPU用量&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">data&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">spec&lt;/span>: |&lt;span style="color:#e6db74">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> predictionMetrics:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> - algorithm:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> algorithmType: dsp
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> dsp:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> estimators:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> fft:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> - highFrequencyThreshold: &amp;#34;0.05&amp;#34;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> lowAmplitudeThreshold: &amp;#34;1.0&amp;#34;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> marginFraction: &amp;#34;0.2&amp;#34;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> maxNumOfSpectrumItems: 20
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> minNumOfSpectrumItems: 10
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> historyLength: 3d
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> sampleInterval: 60s
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> resourceIdentifier: cpu
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> type: ExpressionQuery
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> expressionQuery:
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> expression: &amp;#39;sum(count(node_cpu_seconds_total{mode=&amp;#34;idle&amp;#34;,instance=~&amp;#34;({{.metadata.name}})(:\\d+)?&amp;#34;}) by (mode, cpu)) - sum(irate(node_cpu_seconds_total{mode=&amp;#34;idle&amp;#34;,instance=~&amp;#34;({{.metadata.name}})(:\\d+)?&amp;#34;}[5m]))&amp;#39;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> predictionWindowSeconds: 3600&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">ConfigMap&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">noderesource-tsp-template&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">default&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>结合预测算法和当前实际用量推算节点的剩余可用资源，并将其作为拓展资源赋予节点，pod可标明使用该扩展资源作为离线作业将空闲资源利用起来，以提升节点的资源利用率；&lt;/p>
-&lt;p>使用方法：&lt;br>
-部署pod时limit和request使用&lt;code>gocrane.io/&amp;lt;$ResourceName&amp;gt;：&amp;lt;$value&amp;gt;&lt;/code>即可，如下&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">imagePullPolicy&lt;/span>: &lt;span style="color:#ae81ff">Always&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">extended-resource-demo-ctr&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">resources&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">limits&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">gocrane.io/cpu&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">requests&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">gocrane.io/cpu&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="弹性资源限制功能">弹性资源限制功能&lt;/h2>
-&lt;p>原生的BestEffort应用缺乏资源用量的公平保证，Crane保证使用动态资源的BestEffort pod其cpu使用量被限制在其允许使用的合理范围内，agent保证使用扩展资源的pod实际用量也不会超过其声明限制，同时在cpu竞争时也能按照各自声明量公平竞争；同时使用弹性资源的pod也会受到水位线功能的管理。&lt;/p>
-&lt;p>使用方法：
-部署pod时limit和request使用&lt;code>gocrane.io/&amp;lt;$ResourceName&amp;gt;：&amp;lt;$value&amp;gt;&lt;/code>即可&lt;/p>
-&lt;h2 id="自定义指标干扰检测回避和自定义排序">自定义指标干扰检测回避和自定义排序&lt;/h2>
-&lt;p>自定义指标干扰检测回避和自定义排序的使用同 精确执行回避动作 部分中介绍的流程，此处介绍如何自定义自己的指标参与干扰检测回避流程&lt;/p>
-&lt;p>为了更好的基于NodeQOSEnsurancePolicy配置的metric进行排序和精准控制，对metric引入属性的概念。&lt;/p>
-&lt;p>metric的属性包含如下几个，自定义的指标实现这些字段即可：&lt;/p>
-&lt;ol>
-&lt;li>Name 表明了metric的名称，需要同collector模块中收集到的指标名称一致&lt;/li>
-&lt;li>ActionPriority 表示指标的优先级，0为最低，10为最高&lt;/li>
-&lt;li>SortAble 表明该指标是否可以排序，如果为true，需实现对应的SortFunc&lt;/li>
-&lt;li>SortFunc 对应的排序方法，排序方法可以排列组合一些通用方法，再结合指标自身的排序，将在下文详细介绍&lt;/li>
-&lt;li>ThrottleAble 表明针对该指标，是否可以对pod进行压制，例如针对cpu使用量这个metric，就有相对应的压制手段，但是对于memory使用量这种指标，就只能进行pod的驱逐，无法进行有效的压制&lt;/li>
-&lt;li>ThrottleQuantified 表明压制（restore）一个pod后，能否准确计算出经过压制后释放出的对应metric的资源量，我们将可以准确量化的指标称为可Quantified，否则为不可Quantified；
-比如cpu用量，可以通过限制cgroup用量进行压制，同时可以通过当前运行值和压制后的值计算压制后释放的cpu使用量；而比如memory usage就不属于压制可量化metric，因为memory没有对应的throttle实现，也就无法准确衡量压制一个pod后释放出来的memory资源具体用量；&lt;/li>
-&lt;li>ThrottleFunc，执行Throttle动作的具体方法，如果不可Throttle，返回的released为空&lt;/li>
-&lt;li>RestoreFunc，被Throttle后，执行恢复动作的具体方法，如果不可Restore，返回的released为空&lt;/li>
-&lt;li>EvictAble，EvictQuantified，EvictFunc 对evict动作的相关定义，具体内容和Throttle动作类似&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">metric&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Name&lt;/span> &lt;span style="color:#a6e22e">WaterLineMetric&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ActionPriority&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">SortAble&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">SortFunc&lt;/span> &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">pods&lt;/span> []&lt;span style="color:#a6e22e">podinfo&lt;/span>.&lt;span style="color:#a6e22e">PodContext&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ThrottleAble&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ThrottleQuantified&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ThrottleFunc&lt;/span> &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ExecuteContext&lt;/span>, &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">ThrottleDownPods&lt;/span> &lt;span style="color:#a6e22e">ThrottlePods&lt;/span>, &lt;span style="color:#a6e22e">totalReleasedResource&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ReleaseResource&lt;/span>) (&lt;span style="color:#a6e22e">errPodKeys&lt;/span> []&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">released&lt;/span> &lt;span style="color:#a6e22e">ReleaseResource&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">RestoreFunc&lt;/span> &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ExecuteContext&lt;/span>, &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">ThrottleUpPods&lt;/span> &lt;span style="color:#a6e22e">ThrottlePods&lt;/span>, &lt;span style="color:#a6e22e">totalReleasedResource&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ReleaseResource&lt;/span>) (&lt;span style="color:#a6e22e">errPodKeys&lt;/span> []&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">released&lt;/span> &lt;span style="color:#a6e22e">ReleaseResource&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">EvictAble&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">EvictQuantified&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">EvictFunc&lt;/span> &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">wg&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">WaitGroup&lt;/span>, &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ExecuteContext&lt;/span>, &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">totalReleasedResource&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ReleaseResource&lt;/span>, &lt;span style="color:#a6e22e">EvictPods&lt;/span> &lt;span style="color:#a6e22e">EvictPods&lt;/span>) (&lt;span style="color:#a6e22e">errPodKeys&lt;/span> []&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">released&lt;/span> &lt;span style="color:#a6e22e">ReleaseResource&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>用户可以自行定义自己的metric，在构造完成后，通过registerMetricMap()进行注册&lt;/p>
-&lt;p>针对需要自定义的指标，可以通过实现如下的方法，搭配通用的排序方法即可方便地实现pod的灵活自定义排序，以代表自定义metric指标，&lt;metric-sort-func>代表自定义的针对的排序策略&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">func &amp;lt;metric&amp;gt;Sorter(pods []podinfo.PodContext) {&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">orderedBy(classAndPriority, &amp;lt;metric-sort-func&amp;gt;, runningTime).Sort(pods)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中&lt;code>&amp;lt;metric-sort-func&amp;gt;&lt;/code>需要实现如下的排序方法
-&lt;code>func (p1, p2 podinfo.PodContext) int32&lt;/code>&lt;/p></description></item><item><title>Docs: TimeSeriesPrediction</title><link>/zh-cn/docs/tutorials/using-time-series-prediction/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/using-time-series-prediction/</guid><description>
+&lt;/ul></description></item><item><title>Docs: TimeSeriesPrediction</title><link>/zh-cn/docs/tutorials/using-time-series-prediction/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/zh-cn/docs/tutorials/using-time-series-prediction/</guid><description>
 &lt;p>Knowing the future makes things easier for us.&lt;/p>
 &lt;hr>
 &lt;p>许多业务在时间序列上天然存在周期性的，尤其是对于那些直接或间接为“人”服务的业务。这种周期性是由人们日常活动的规律性决定的。例如，人们习惯于中午和晚上点外卖；早晚总有交通高峰；即使是搜索等模式不那么明显的服务，夜间的请求量也远低于白天时间。对于这类业务相关的应用来说，从过去几天的历史数据中推断出次日的指标，或者从上周一的数据中推断出下周一的访问量是很自然的想法。通过预测未来 24 小时内的指标或流量模式，我们可以更好地管理我们的应用程序实例，稳定我们的系统，同时降低成本。&lt;/p>
